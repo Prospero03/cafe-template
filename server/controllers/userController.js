@@ -82,7 +82,21 @@ class userController{
         return res.status(200).json({success:true, message:'вы вышли'})
     }
     async cookie(req,res){
-
+        const token = req.cookies.ApiToken
+        if(!token){
+            return res.status(200).json({success: true, message: false})
+        }
+        return res.status(200).json({success: true, message: true})
+    }
+    async profile(req,res){
+        const {user} = req
+         return res.status(200).json({
+            success:true, 
+            data:{
+                name: user.name,
+                login: user.login
+            }
+        })
     }
     async index(req,res){
 
