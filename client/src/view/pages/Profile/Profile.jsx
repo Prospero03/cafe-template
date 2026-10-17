@@ -4,6 +4,10 @@ import { useSelector } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+if( typeof window !== 'undefined'){
+    require('./Profile.scss')
+}
+
 const Profile = () => {
     const [UserData, setUserData] = useState();
     const [SaveData, setSaveData] = useState();
@@ -22,14 +26,13 @@ const Profile = () => {
             } catch (error) {
                 navigate('/login')
             }
-            
         }
         fetch()
     },[server, navigate])
 
     const handlerUpdate = async(id, changes) =>{
-        const res = await axios.patch(`${server}/api/user/all/${id}/update`, 
-            changes, 
+        const res = await axios.patch(`${server}/api/user/all/${id}/update`,
+            changes,
             {withCredentials:true}
         )
         toast.success(res.data.message)
@@ -42,92 +45,111 @@ const Profile = () => {
 
     const hasChange = JSON.stringify(UserData) !== JSON.stringify(SaveData)
     const user = UserData
-    
+
 
     return (
-        <section className='profile-block'>
+        <section className='profile-block container'>
             <h1 className='profile-block__title'>
                 Личный кабинет
             </h1>
 
             <div className='profile-block__wrap'>
-                <h2 className='profile-block__subtitle'>
+                <h3 className='profile-block__subtitle'>
                     Личная информация
-                </h2>
+                </h3>
                 <form className='profile-block__form'>
                     <div className='profile-block__field'>
-                        <label>Имя</label>
-                        <input  type="text" name="name" 
-                                value={user?.name} onChange={change}
+                        <label  htmlFor='given_name'>Имя</label>
+                        <input  id='given_name'
+                                type='text' name='given_name'
+                                value={user?.given_name ?? ''} onChange={change}
                                 autoComplete='given-name'/>
                     </div>
                     <div className='profile-block__field'>
-                        <label>Фамилия</label>
-                        <input  type="text" name="surname" 
-                                value={user?.surname} onChange={change}
+                        <label  htmlFor='family_name'>Фамилия</label>
+                        <input  id='family_name'
+                                type='text' name='family_name'
+                                value={user?.family_name ?? ''} onChange={change}
                                 autoComplete='family-name'/>
                     </div>
                     <div className='profile-block__field'>
-                        <label>Отчество</label>
-                        <input  type="text" name="patronym" 
-                                value={user?.patronym} onChange={change}
+                        <label  htmlFor='additional_name'>Отчество</label>
+                        <input  id='additional_name'
+                                type='text' name='additional_name'
+                                value={user?.additional_name ?? ''} onChange={change}
                                 autoComplete='additional-name'/>
                     </div>
                     <div className='profile-block__field--checkbox'>
-                        <div>
-                            <label>Мужской</label> 
-                            <input type='checkbox' name='gender' value='man' 
-                                checked={user?.gender === 'man'}
-                                onChange={change}/>
-                        </div>
-                        <div>
-                            <label>Женский</label> 
-                            <input type='checkbox' name='gender' value='woman' 
-                                checked={user?.gender === 'woman'}
-                                onChange={change}/>
+                        <p>Пол</p>
+                        <div className='profile-block__field--checkbox-wrap'>
+                            <div className='profile-block__field--checkbox-item'>
+                                <input  id='man'
+                                        type='checkbox' name='gender' value='man'
+                                        checked={user?.gender === 'man'}
+                                        onChange={change}/>
+                                <label  htmlFor='man'>Мужской</label>
+
+                            </div>
+                            <div className='profile-block__field--checkbox-item'>
+                                <input  id='woman'
+                                        type='checkbox' name='gender' value='woman'
+                                        checked={user?.gender === 'woman'}
+                                        onChange={change}/>
+                                <label  htmlFor='woman'>Женский</label>
+                            </div>
                         </div>
                     </div>
-                </form>   
+                </form>
             </div>
-            
+
             <div className='profile-block__wrap'>
-                <h2 className='profile-block__subtitle'>
+                <h3 className='profile-block__subtitle'>
                     Адрес
-                </h2>
+                </h3>
                 <form className='profile-block__form'>
                     <div className='profile-block__field'>
-                        <label>Город</label>
-                        <input  type="text" name="city" 
-                                value={user?.city} onChange={change}/>
+                        <label  htmlFor='city'>Город</label>
+                        <input  id='city' type='text' name='city'
+                                value={user?.city ?? ''} onChange={change}
+                                autoComplete='address-level2'/>
                     </div>
                     <div className='profile-block__field'>
-                        <label>Адрес</label>
-                        <input  type="text" name="address" 
-                                value={user?.address} onChange={change}/>
+                        <label  htmlFor='street'>Улица</label>
+                        <input  id='street' type='text' name='street'
+                                value={user?.street ?? ''} onChange={change}
+                                autoComplete='address-line1'/>
                     </div>
                     <div className='profile-block__field'>
-                        <label>Дом</label>
-                        <input  type="text" name="house" 
-                                value={user?.house} onChange={change}/>
+                        <label  htmlFor='entrance'>Подьезд</label>
+                        <input  id='entrance' type='text' name='entrance'
+                                value={user?.entrance ?? ''} onChange={change}/>
                     </div>
                     <div className='profile-block__field'>
-                        <label>Квартира</label>
-                        <input  type="text" name="apartment" 
-                                value={user?.apartment} onChange={change}/>
+                        <label  htmlFor='house'>Дом</label>
+                        <input  id='house' type='text' name='house'
+                                value={user?.house ?? ''} onChange={change}
+                                autoComplete='address-line2'/>
+                    </div>
+                    <div className='profile-block__field'>
+                        <label  htmlFor='apartment'>Квартира</label>
+                        <input  id='apartment' type='text' name='apartment'
+                                value={user?.apartment ?? ''} onChange={change}
+                                autoComplete='address-line3'/>
                     </div>
                 </form>
             </div>
 
             <button className='btn'
-                    type="button" 
+                    type='button'
                     disabled={hasChange ? false : true}
-                    onClick={()=> handlerUpdate(user?.id, { 
-                        name: user.name,
-                        surname: user.surname,
-                        patronym: user.patronym,
+                    onClick={()=> handlerUpdate(user?.id, {
+                        given_name: user.given_name,
+                        family_name: user.family_name,
+                        additional_name: user.additional_name,
                         gender: user.gender,
                         city: user.city,
-                        address: user.address,
+                        street: user.street,
+                        entrance: user.entrance,
                         house: user.house,
                         apartment: user.apartment
                     })}>

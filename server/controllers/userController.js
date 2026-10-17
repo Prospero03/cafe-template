@@ -94,12 +94,13 @@ class userController{
             success:true, 
             data:{
                 id: user.id,
-                name: user.name,
-                surname: user.surname,
-                patronym: user.patronym,
+                given_name: user.given_name,
+                family_name: user.family_name,
+                additional_name: user.additional_name,
                 gender: user.gender,
                 city: user.city,
-                address: user.address,
+                street: user.street,
+                entrance: user.entrance,
                 house: user.house,
                 apartment: user.apartment, 
                 email: user.email,
@@ -115,16 +116,30 @@ class userController{
     }
     async update(req,res){
         const {id} = req.params
-        const {name, surname, patronym, gender, city, address, house, apartment} = req.body
+        const {
+            given_name, 
+            family_name, 
+            additional_name, 
+            gender, 
+            city, 
+            street, 
+            entrance, 
+            house, 
+            apartment
+        } = req.body
+
         const user = await User.findByPk(id)
-        user.name = name
-        user.surname = surname
-        user.patronym = patronym
+        
+        user.given_name = given_name
+        user.family_name = family_name
+        user.additional_name = additional_name
         user.gender = gender
         user.city = city
-        user.address = address
+        user.street = street
+        user.entrance = entrance
         user.house = house
         user.apartment = apartment
+
         await user.save()
         return res.status(200).json({success:true, message:'вы обновили данные'})
     }

@@ -3,11 +3,12 @@ const database = require('../database/database')
 
 const User = database.define('users', {
     id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
-    name: {type: DataTypes.STRING, allowNull: true},
-    surname: {type: DataTypes.STRING},
-    patronym: {type: DataTypes.STRING},
+    given_name: {type: DataTypes.STRING, allowNull: true},
+    family_name: {type: DataTypes.STRING},
+    additional_name: {type: DataTypes.STRING},
     city: {type: DataTypes.STRING},
-    address: {type: DataTypes.STRING},
+    street: {type: DataTypes.STRING},
+    entrance: {type: DataTypes.STRING},
     house: {type: DataTypes.STRING},
     apartment: {type: DataTypes.STRING},
     login: {type: DataTypes.STRING},
