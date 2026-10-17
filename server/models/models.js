@@ -3,11 +3,18 @@ const database = require('../database/database')
 
 const User = database.define('users', {
     id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
-    name: {type: DataTypes.STRING},
+    name: {type: DataTypes.STRING, allowNull: true},
+    surname: {type: DataTypes.STRING},
+    patronym: {type: DataTypes.STRING},
+    city: {type: DataTypes.STRING},
+    address: {type: DataTypes.STRING},
+    house: {type: DataTypes.STRING},
+    apartment: {type: DataTypes.STRING},
     login: {type: DataTypes.STRING},
     email: {type: DataTypes.STRING},
     password: {type: DataTypes.STRING},
-    image: {type: DataTypes.STRING, defaultValue: null},
+    image: {type: DataTypes.STRING,  defaultValue: null},
+    gender: {type: DataTypes.ENUM('man', 'woman'), allowNull: true, defaultValue: null},
     role: {type: DataTypes.ENUM('admin', 'user'), defaultValue:'user'},
 })
 

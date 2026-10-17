@@ -90,11 +90,20 @@ class userController{
     }
     async profile(req,res){
         const {user} = req
-         return res.status(200).json({
+        return res.status(200).json({
             success:true, 
             data:{
+                id: user.id,
                 name: user.name,
-                login: user.login
+                surname: user.surname,
+                patronym: user.patronym,
+                gender: user.gender,
+                city: user.city,
+                address: user.address,
+                house: user.house,
+                apartment: user.apartment, 
+                email: user.email,
+                login: user.login,
             }
         })
     }
@@ -105,7 +114,19 @@ class userController{
 
     }
     async update(req,res){
-
+        const {id} = req.params
+        const {name, surname, patronym, gender, city, address, house, apartment} = req.body
+        const user = await User.findByPk(id)
+        user.name = name
+        user.surname = surname
+        user.patronym = patronym
+        user.gender = gender
+        user.city = city
+        user.address = address
+        user.house = house
+        user.apartment = apartment
+        await user.save()
+        return res.status(200).json({success:true, message:'вы обновили данные'})
     }
     async destroy(req,res){
 

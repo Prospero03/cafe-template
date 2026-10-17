@@ -8,6 +8,7 @@ import axios from 'axios'
 import { authActions } from './store/authSlice'
 import Register from './view/pages/Register/Register'
 import Login from './view/pages/Login/Login'
+import Profile from './view/pages/Profile/Profile'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -32,6 +33,7 @@ const App = () => {
             <Route index element={<Home/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/profile" element={<Profile/>}/>
           </Route>
         </Routes>
       </Router>
