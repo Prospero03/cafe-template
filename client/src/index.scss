@@ -1,3 +1,5 @@
+@use './scss/variables.scss';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,6 +12,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.main-layout{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main{
+   flex: 1;
 }
 
 .main-container{
@@ -48,21 +60,20 @@ p{
 
 
 input{
-    border: 1px solid gainsboro;
+    border: 1px solid var(--border-grey);
     height: 24px;
     padding: 4px 8px;
     font-size: 1rem;
   
     &:focus{
-      outline: 1.5px solid slateblue;
+      outline: 1.5px solid var(--main);
     }
 }
 
 .btn{
   background-color: transparent;
-  color: rgb(69, 69, 69);
   font-weight: 700;
-  border: 1px solid gainsboro;
+  border: 1px solid var(--border-grey);
   border-radius: 12px;
   font-size: 1rem;
   padding: 8px 12px;
@@ -71,9 +82,9 @@ input{
   width: fit-content;
 
   &:hover{
-    background-color: rgb(242, 242, 242);
+    background-color: var(--background-grey);
   }
   &:disabled{
-    background-color: gainsboro;
+    background-color: var(--background-grey);
   }
 }

@@ -1,8 +1,16 @@
 import React from 'react'
 
+if (typeof window !== 'undefined'){
+  require('./Footer.scss')
+}
+
 const Footer = () => {
   return (
-    <div>Footer</div>
+    <footer className='footer'>
+      <div className='footer__container main-container'>
+        Footer
+      </div>
+    </footer>
   )
 }
 

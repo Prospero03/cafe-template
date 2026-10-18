@@ -1,8 +1,11 @@
 import React from 'react'
+import FirstSwiper from '../../blocs/FirstSwiper/FirstSwiper'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <div>
+      <FirstSwiper/>
+    </div>
   )
 }
 
