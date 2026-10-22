@@ -13,6 +13,8 @@ import AdminLayout from './admin/layout/AdminLayout'
 import Dashboard from './admin/pages/Dashboard/Dashboard'
 import DashboardUsers from './admin/pages/DashboardUsers/DashboardUsers'
 import DashboardUserDetail from './admin/pages/DashboardUsers/DashboardUserDetail'
+import DashboardCategory from './admin/pages/DashboardCategory/DashboardCategory'
+import DashboardCategoryDetail from './admin/pages/DashboardCategory/DashboardCategoryDetail'
 
 
 const App = () => {
@@ -44,6 +46,8 @@ const App = () => {
             <Route index element={<Dashboard/>}/>
             <Route path="users" element={<DashboardUsers/>}/>
             <Route path="users/:id" element={<DashboardUserDetail/>}/>
+            <Route path="category" element={<DashboardCategory/>}/>
+            <Route path="category/:id" element={<DashboardCategoryDetail/>}/>
           </Route>
         </Routes>
       </Router>

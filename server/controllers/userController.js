@@ -109,10 +109,17 @@ class userController{
         })
     }
     async index(req,res){
-
+        const users = await User.findAll({
+            attribute: ['login', 'role', 'id'],
+            order: [['createdAt', 'DESC']]
+            
+        })
+        return res.status(200).json({success:true, message: true, data: users})
     }
     async show(req,res){
-
+        const {id} = req.params
+        const user = await User.findByPk(id)
+        return res.status(200).json({success:true, data: user})
     }
     async update(req,res){
         const {id} = req.params
@@ -125,11 +132,13 @@ class userController{
             street, 
             entrance, 
             house, 
-            apartment
+            apartment,
+            login,
         } = req.body
 
         const user = await User.findByPk(id)
         
+        user.login = login
         user.given_name = given_name
         user.family_name = family_name
         user.additional_name = additional_name
@@ -144,7 +153,10 @@ class userController{
         return res.status(200).json({success:true, message:'вы обновили данные'})
     }
     async destroy(req,res){
-
+        const {id} = req.params
+        const user = await User.findByPk(id)
+        await user.destroy()
+        return res.status(200).json({success:true, message:'вы успешно удалили пользователя'})
     }
 }
 

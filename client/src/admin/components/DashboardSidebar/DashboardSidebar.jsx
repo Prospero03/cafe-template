@@ -19,6 +19,10 @@ const DashboardSidebar = (props) => {
           name: 'Пользователи',
           to: '/admin/users',
         },
+        { 
+          name: 'Категории',
+          to: '/admin/category',
+        },
       ]
     } = props
 

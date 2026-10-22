@@ -30,7 +30,8 @@ const Product = database.define('products', {
 const Category = database.define('categories', {
     id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     name: {type: DataTypes.STRING},
-    description: {type: DataTypes.TEXT}
+    description: {type: DataTypes.TEXT},
+    image : {type: DataTypes.STRING}
 })
 
 const CategoryProduct = database.define('categories_products',{
