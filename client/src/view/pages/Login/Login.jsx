@@ -25,7 +25,13 @@ const Login = () => {
             Inputs, 
             {withCredentials: true}
         )
-          dispatch(authActions.login())
+        dispatch(authActions.login())
+        if(res.data.role === 'user'){
+            navigate('/profile')
+        }else if(res.data.role === 'admin'){
+            navigate('/admin')
+        }
+          
           console.log(res.data.role)
           toast.success(res.data.message)
         } catch (error) {

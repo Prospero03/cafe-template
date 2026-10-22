@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { authActions } from '../../../store/authSlice';
 
 if( typeof window !== 'undefined'){
     require('./Profile.scss')
@@ -11,7 +12,10 @@ if( typeof window !== 'undefined'){
 const Profile = () => {
     const [UserData, setUserData] = useState();
     const [SaveData, setSaveData] = useState();
+
     const server = useSelector((state)=> state.prod.link)
+    const dispatch = useDispatch()
+
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -35,6 +39,17 @@ const Profile = () => {
             changes,
             {withCredentials:true}
         )
+        
+        toast.success(res.data.message)
+        navigate('/')
+    }
+
+    const handleLogout = async() =>{
+        const res = await axios.post(`${server}/api/user/logout`,
+            '',
+            {withCredentials:true}
+        )
+        dispatch(authActions.logout())
         toast.success(res.data.message)
     }
 
@@ -154,6 +169,12 @@ const Profile = () => {
                         apartment: user.apartment
                     })}>
                 Сохранить
+            </button>
+
+            <button className='btn'
+                    type='button'
+                    onClick={()=>handleLogout()}>
+                    Выйти из аккаунта
             </button>
         </section>
     )

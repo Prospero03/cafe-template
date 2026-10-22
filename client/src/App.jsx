@@ -9,6 +9,11 @@ import { authActions } from './store/authSlice'
 import Register from './view/pages/Register/Register'
 import Login from './view/pages/Login/Login'
 import Profile from './view/pages/Profile/Profile'
+import AdminLayout from './admin/layout/AdminLayout'
+import Dashboard from './admin/pages/Dashboard/Dashboard'
+import DashboardUsers from './admin/pages/DashboardUsers/DashboardUsers'
+import DashboardUserDetail from './admin/pages/DashboardUsers/DashboardUserDetail'
+
 
 const App = () => {
     const dispatch = useDispatch()
@@ -34,6 +39,11 @@ const App = () => {
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/profile" element={<Profile/>}/>
+          </Route>
+          <Route path="/admin" element={<AdminLayout/>}>
+            <Route index element={<Dashboard/>}/>
+            <Route path="users" element={<DashboardUsers/>}/>
+            <Route path="users/:id" element={<DashboardUserDetail/>}/>
           </Route>
         </Routes>
       </Router>
