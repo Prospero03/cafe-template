@@ -152,7 +152,7 @@ class userController{
         await user.save()
         return res.status(200).json({success:true, message:'вы обновили данные'})
     }
-    async destroy(req,res){
+    async delete(req,res){
         const {id} = req.params
         const user = await User.findByPk(id)
         await user.destroy()

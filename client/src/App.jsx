@@ -15,6 +15,8 @@ import DashboardUsers from './admin/pages/DashboardUsers/DashboardUsers'
 import DashboardUserDetail from './admin/pages/DashboardUsers/DashboardUserDetail'
 import DashboardCategory from './admin/pages/DashboardCategory/DashboardCategory'
 import DashboardCategoryDetail from './admin/pages/DashboardCategory/DashboardCategoryDetail'
+import DashboardProduct from './admin/pages/DashboardProduct/DashboardProduct'
+import DashboardProductDetail from './admin/pages/DashboardProduct/DashboardProductDetail'
 
 
 const App = () => {
@@ -36,18 +38,25 @@ const App = () => {
       <Router>
         <ToastContainer/>
         <Routes>
+
           <Route path="/" element={<MainLayout/>}>
             <Route index element={<Home/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/profile" element={<Profile/>}/>
           </Route>
+
           <Route path="/admin" element={<AdminLayout/>}>
             <Route index element={<Dashboard/>}/>
+            
             <Route path="users" element={<DashboardUsers/>}/>
             <Route path="users/:id" element={<DashboardUserDetail/>}/>
+
             <Route path="category" element={<DashboardCategory/>}/>
             <Route path="category/:id" element={<DashboardCategoryDetail/>}/>
+
+            <Route path="products" element={<DashboardProduct/>}/>
+            <Route path="products/:id" element={<DashboardProductDetail/>}/>
           </Route>
         </Routes>
       </Router>

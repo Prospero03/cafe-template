@@ -22,7 +22,7 @@ const User = database.define('users', {
 const Product = database.define('products', {
     id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
     name: {type: DataTypes.STRING},
-    price: {type: DataTypes.STRING},
+    price: {type: DataTypes.STRING, defaultValue: '0'},
     image: {type: DataTypes.STRING},
     description: {type: DataTypes.TEXT}
 })
