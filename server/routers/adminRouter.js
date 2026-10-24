@@ -17,7 +17,7 @@ router.post('/category/create', authMiddleware.verifyToken, authMiddleware.authA
 router.get('/category', authMiddleware.verifyToken, authMiddleware.authAdmin, categoryController.index)
 router.get('/category/:id', authMiddleware.verifyToken, authMiddleware.authAdmin, categoryController.show)
 router.patch('/category/:id/update', authMiddleware.verifyToken, authMiddleware.authAdmin, categoryController.update)
-
+router.delete('/category/:id/delete', authMiddleware.verifyToken, authMiddleware.verifyToken, categoryController.delete)
 
 
 

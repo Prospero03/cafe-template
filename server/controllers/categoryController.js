@@ -49,6 +49,13 @@ class categoryController{
         await category.save()
         return res.status(200).json({success:true, message: 'вы обновили категорию'})
     }
+
+    async delete(req,res){
+        const {id} = req.params
+        const category = await Category.findByPk(id)
+        await category.destroy()
+         return res.status(200).json({success:true, message: 'вы удалили категорию'})
+    }
 }
 
 module.exports = new categoryController()

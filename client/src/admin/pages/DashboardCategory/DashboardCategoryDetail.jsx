@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import {toast} from 'react-toastify'
 
 const DashboardCategoryDetail = () => {
@@ -9,6 +9,8 @@ const DashboardCategoryDetail = () => {
     const [Category, setCategory] = useState();
     const [Image, setImage] = useState(null);
     const server = useSelector((state)=>state.prod.link)
+    const navigate =useNavigate()
+
     useEffect(() => {
         const fetch = async()=>{
             const res = await axios.get(`${server}/api/admin/category/${id}`,
@@ -44,6 +46,20 @@ const DashboardCategoryDetail = () => {
         window.location.reload()
     }
 
+    const handleDelete = async(id) => {
+        try {
+            if(!window.confirm('Вы уверены ?')) return
+            const res = await axios.delete(`${server}/api/admin/category/${id}/delete`,
+                {withCredentials:true}
+            )
+            setCategory(item => item.id === id)
+            navigate('/admin/category')
+            toast.success(res.data.message)
+        } catch (error) {
+            console.log(error.response.data.error)
+        }
+    }
+
     return (
         <div>
             <div>
@@ -62,6 +78,12 @@ const DashboardCategoryDetail = () => {
                 <input name="image" id="image" type="file" accept='image/*' 
                         onChange={change}/>
             </div>
+
+            <button type="button"
+                    className='btn'
+                    onClick={()=> handleDelete(Category.id)}>
+                    Удалить
+            </button>
 
             <button type="button"
                     className='btn'

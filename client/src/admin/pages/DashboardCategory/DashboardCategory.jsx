@@ -27,9 +27,10 @@ const DashboardCategory = () => {
                 formData,
                 {withCredentials: true}
             )
-            
+            window.location.reload()
             console.log(res.data.message);
-            toast.success(res.data.message)
+            toast.success(res.data.message);
+            
         } catch (error) {
             console.log(error.response.data.error)
         }
