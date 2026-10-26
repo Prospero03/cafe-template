@@ -26,7 +26,7 @@ const Header = (props) => {
             <div className='header__wrap'>
               <nav className='header__nav'>
                 <NavLink className='header__profile'  to='/profile'>
-                  <img src='' alt='' />
+                  {/* <img src='' alt='' /> */}
                 </NavLink>
                 <NavLink className='header__cart'  to='/cart'>
                   Корзина

@@ -16,6 +16,7 @@ class categoryController{
             description: description,
             image: fileImage
         })
+
         await category.save()
         return res.status(200).json({success:true, message:'вы создали категорию'})
     }

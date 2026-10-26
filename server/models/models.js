@@ -38,13 +38,30 @@ const CategoryProduct = database.define('categories_products',{
     id: {type: DataTypes.INTEGER, primaryKey:true, autoIncrement: true},
 })
 
-Category.belongsToMany(Product, {through : CategoryProduct})
-Product.belongsToMany(Category, {through : CategoryProduct})
+const Basket = database.define('baskets', {
+    id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true}
+})
 
+const BasketProduct = database.define('basket_products', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
+    quantity:{type: DataTypes.INTEGER, defaultValue: 1}
+})
+
+
+Category.belongsToMany(Product, {through: CategoryProduct})
+Product.belongsToMany(Category, {through: CategoryProduct})
+
+Basket.belongsToMany(Product, {through: BasketProduct})
+Product.belongsToMany(Basket, {through: BasketProduct})
+
+User.hasOne(Basket)
+Basket.belongsTo(User)
 
 module.exports = {
     User, 
     Product,
     Category,
-    CategoryProduct
+    CategoryProduct,
+    Basket,
+    BasketProduct,
 }

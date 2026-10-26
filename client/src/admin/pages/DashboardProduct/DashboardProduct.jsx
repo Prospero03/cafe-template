@@ -9,9 +9,12 @@ const DashboardProduct = () => {
       name: '',
       description: '',
       price: '0',
-      image: null
+      image: null,
+      categoryId: '',
     });
     const [Products, setProducts] = useState();
+    const [Categories, setCategories] = useState();
+
     const server = useSelector((state)=>state.prod.link)
     const navigate = useNavigate()
     const change = (e) => {
@@ -25,6 +28,7 @@ const DashboardProduct = () => {
       formData.append('name', Inputs.name)
       formData.append('description', Inputs.description)
       formData.append('price', Inputs.price)
+      if(Inputs.categoryId)formData.append('categoryId', Inputs.categoryId)
       if(Inputs.image)formData.append('image', Inputs.image)
 
       try {
@@ -40,11 +44,17 @@ const DashboardProduct = () => {
 
     useEffect(()=>{
       const fetch = async()=> {
-        const res = await axios.get(`${server}/api/admin/products`,
+        const resProduct = await axios.get(`${server}/api/admin/products`,
           {withCredentials:true}
         )
-        setProducts(res.data.data)
-        console.log(res.data.data)
+        const resCategory = await axios.get(`${server}/api/admin/category`,
+          {withCredentials:true}
+        )
+        setProducts(resProduct.data.data)
+        console.log(resProduct.data.data)
+
+        setCategories(resCategory.data.data)
+        console.log(resCategory.data.data)
       }
       fetch()
     },[server])
@@ -67,6 +77,19 @@ const DashboardProduct = () => {
           <div>
             <label htmlFor='image'>Изображение</label>
             <input id='image' type='file' name='image' accept='image/*' onChange={change} required/>
+          </div>
+          <div>
+            <label htmlFor='categoryId'>Категория</label>
+            <select id='categoryId' name='categoryId' value={Inputs.categoryId} onChange={change}>
+              <option value=''>Выберите категорию</option>
+              {Categories?.map((item,key)=>{
+                return(
+                  <option key={key} value={item.id}>
+                    {item?.name}
+                  </option>
+                )
+              })}
+            </select>
           </div>
           <button type='submit'>
             Создать товар

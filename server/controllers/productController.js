@@ -1,6 +1,7 @@
 const uuid = require('uuid')
 const path = require('path')
 const { Product, Category, CategoryProduct } = require('../models/models')
+const { error } = require('console')
 
 class productController{
     async create(req,res){
@@ -10,36 +11,35 @@ class productController{
         let fileImage = uuid.v4() + '.webp'
         image.mv(path.resolve(__dirname, '..', 'static', fileImage))
 
-        // const categoryProduct = await CategoryProduct.findAll({
-        //     where: {categoryId}
-        // })
-
-        // const category = await Category.findAll({
-        //     where: {id: categoryProduct.categoryId}
-        // })
+        const category = categoryId && await Category.findByPk(categoryId)
+        if(categoryId && !category){
+            return res.status(404).json({success:false, error: 'категория не найдена'})
+        }
 
         const product = await Product.create({
             name: name,
             description: description,
             price: price,
             image: fileImage,
-            // category: category.name   
         })
 
         await product.save()
+        if(category) await product.addCategory(category)
         return res.status(200).json({success:true, message: 'вы создали товар'})
     }
     async index(req,res){
         const products = await Product.findAll({
             attributes: ['id', 'name', 'description', 'price', 'image'],
-            order: [['createdAt', 'DESC']]
-            // include: [Category]
+            order: [['createdAt', 'DESC']],
+            include: [Category]
         })
         return res.status(200).json({success:true, data: products})
     }
     async show(req,res){
         const {id} = req.params
-        const product = await Product.findByPk(id)
+        const product = await Product.findByPk(id, {
+            include: [Category]
+        })
         return res.status(200).json({success:true, data:product})
     }
     async update(req,res){
