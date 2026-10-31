@@ -26,6 +26,10 @@ const DashboardSidebar = (props) => {
         {
           name: 'Товары',
           to: '/admin/products'
+        },
+        {
+          name: 'Заказы',
+          to: '/admin/orders'
         }
       ]
     } = props

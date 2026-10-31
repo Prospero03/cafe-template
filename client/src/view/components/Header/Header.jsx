@@ -28,7 +28,7 @@ const Header = (props) => {
                 <NavLink className='header__profile'  to='/profile'>
                   {/* <img src='' alt='' /> */}
                 </NavLink>
-                <NavLink className='header__cart'  to='/cart'>
+                <NavLink className='header__cart'  to='/basket'>
                   Корзина
                 </NavLink>
               </nav>

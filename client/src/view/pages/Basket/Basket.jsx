@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import './Basket.scss'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import {toast} from 'react-toastify'
 
 const Basket = () => {
     const server = useSelector((state)=>state.prod.link)
     const [BasketData, setBasketData] = useState();
+    const [orderData, setOrderData] = useState(false);
 
     useEffect(()=>{
         const fetch = async()=>{
@@ -29,7 +31,18 @@ const Basket = () => {
         setBasketData(res.data.data)
     }
 
-
+    const handlerOrder = async()=>{
+        setOrderData(true)
+        try {
+            const res = await axios.post(`${server}/api/orders/store`,
+                {},
+                {withCredentials:true}
+            )
+            toast.success(res.data.message)
+        } catch (error) {
+            toast.error(error.response.data.error)   
+        }
+    }
 
     return (
         <div>
@@ -63,6 +76,12 @@ const Basket = () => {
                     </div>
                 )
             })}
+
+            <button type="button"
+                    className='btn'
+                    onClick={()=>handlerOrder()}>
+                Оформить заказ
+            </button>
         </div>
     )
 }

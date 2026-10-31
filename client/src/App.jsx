@@ -20,6 +20,8 @@ import DashboardProductDetail from './admin/pages/DashboardProduct/DashboardProd
 import Basket from './view/pages/Basket/Basket'
 import Products from './view/pages/Product/Products'
 import ProductDetail from './view/pages/Product/ProductDetail'
+import DashboardOrder from './admin/pages/DashboardOrder/DashboardOrder'
+import DashboardOrderDetail from './admin/pages/DashboardOrder/DashboardOrderDetail'
 
 
 const App = () => {
@@ -63,6 +65,10 @@ const App = () => {
 
             <Route path="products" element={<DashboardProduct/>}/>
             <Route path="products/:id" element={<DashboardProductDetail/>}/>
+          
+            <Route path="orders" element={<DashboardOrder/>}/>
+            <Route path="orders/:id" element={<DashboardOrderDetail/>}/>
+            
           </Route>
         </Routes>
       </Router>

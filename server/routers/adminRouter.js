@@ -4,6 +4,7 @@ const authMiddleware = require('../middlewares/authMiddleware')
 const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const productController = require('../controllers/productController')
+const orderController = require('../controllers/orderController')
 const router = Router()
 
 router.get('/dashboard', authMiddleware.verifyToken, authMiddleware.authAdmin, adminController.dashboard)
@@ -25,5 +26,8 @@ router.get('/products', authMiddleware.verifyToken, authMiddleware.authAdmin, pr
 router.get('/products/:id', authMiddleware.verifyToken, authMiddleware.authAdmin, productController.show)
 router.patch('/products/:id/update',  authMiddleware.verifyToken, authMiddleware.authAdmin, productController.update)
 router.delete('/products/:id/delete', authMiddleware.verifyToken, authMiddleware.authAdmin, productController.delete)
+
+router.get('/orders', authMiddleware.verifyToken, authMiddleware.authAdmin, orderController.index)
+router.get('/orders/:id', authMiddleware.verifyToken, authMiddleware.authAdmin, orderController.show)
 
 module.exports = router

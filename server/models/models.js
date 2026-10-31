@@ -1,4 +1,4 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes, INTEGER } = require('sequelize')
 const database = require('../database/database')
 
 const User = database.define('users', {
@@ -47,15 +47,35 @@ const BasketProduct = database.define('basket_products', {
     quantity:{type: DataTypes.INTEGER, defaultValue: 1}
 })
 
+const Order = database.define('orders', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
+    status:{type: DataTypes.ENUM('создан', 'отправлен', 'готовится', 'отменён'), defaultValue:'создан'}
+})
 
-Category.belongsToMany(Product, {through: CategoryProduct})
-Product.belongsToMany(Category, {through: CategoryProduct})
+const OrderUser = database.define('orders_users',{
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true}
+})
+
+const OrderProduct = database.define('orders_products',{
+    id:{type:DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
+    quantity:{type: DataTypes.INTEGER, defaultValue: 1}
+})
+
+User.hasOne(Basket)
+Basket.belongsTo(User)
+
+User.hasOne(Order)
+Order.belongsTo(User)
 
 Basket.belongsToMany(Product, {through: BasketProduct})
 Product.belongsToMany(Basket, {through: BasketProduct})
 
-User.hasOne(Basket)
-Basket.belongsTo(User)
+Category.belongsToMany(Product, {through: CategoryProduct})
+Product.belongsToMany(Category, {through: CategoryProduct})
+
+Order.belongsToMany(Product, {through: OrderProduct})
+Product.belongsToMany(Order, {through: OrderProduct})
+
 
 module.exports = {
     User, 
@@ -64,4 +84,6 @@ module.exports = {
     CategoryProduct,
     Basket,
     BasketProduct,
+    Order,
+    OrderProduct,
 }

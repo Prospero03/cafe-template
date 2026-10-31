@@ -1,7 +1,6 @@
 const uuid = require('uuid')
 const path = require('path')
-const { Product, Category, CategoryProduct } = require('../models/models')
-const { error } = require('console')
+const { Product, Category} = require('../models/models')
 
 class productController{
     async create(req,res){
