@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import {BrowserRouter as Router, Routes, Route, useParams} from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
 import MainLayout from './view/layout/MainLayout'
 import Home from './view/pages/Home/Home'
@@ -27,6 +27,7 @@ import DashboardOrderDetail from './admin/pages/DashboardOrder/DashboardOrderDet
 const App = () => {
     const dispatch = useDispatch()
     const server = useSelector((state)=>state.prod.link)
+    
     useEffect(()=>{
       const fetch = async()=>{
         const res = await axios.get(`${server}/api/user/cookie`,
@@ -38,6 +39,8 @@ const App = () => {
       }
       fetch()
     },[dispatch, server])
+
+
     
     return (
       <Router>

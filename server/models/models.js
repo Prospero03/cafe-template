@@ -42,18 +42,14 @@ const Basket = database.define('baskets', {
     id:{type: DataTypes.INTEGER, primaryKey: true, autoIncrement:true}
 })
 
+const Order = database.define('orders', {
+    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
+    status:{type: DataTypes.ENUM('создан', 'готовится', 'отправлен', 'завершен', 'отменён'), defaultValue:'создан'}
+})
+
 const BasketProduct = database.define('basket_products', {
     id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
     quantity:{type: DataTypes.INTEGER, defaultValue: 1}
-})
-
-const Order = database.define('orders', {
-    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true},
-    status:{type: DataTypes.ENUM('создан', 'отправлен', 'готовится', 'отменён'), defaultValue:'создан'}
-})
-
-const OrderUser = database.define('orders_users',{
-    id:{type: DataTypes.INTEGER, primaryKey:true, autoIncrement:true}
 })
 
 const OrderProduct = database.define('orders_products',{

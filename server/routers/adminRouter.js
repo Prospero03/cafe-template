@@ -29,5 +29,8 @@ router.delete('/products/:id/delete', authMiddleware.verifyToken, authMiddleware
 
 router.get('/orders', authMiddleware.verifyToken, authMiddleware.authAdmin, orderController.index)
 router.get('/orders/:id', authMiddleware.verifyToken, authMiddleware.authAdmin, orderController.show)
+router.patch('/orders/:id/update', authMiddleware.verifyToken, authMiddleware.authAdmin, orderController.update)
+
+
 
 module.exports = router

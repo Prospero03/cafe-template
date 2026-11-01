@@ -12,7 +12,7 @@ if( typeof window !== 'undefined'){
 const Profile = () => {
     const [UserData, setUserData] = useState();
     const [SaveData, setSaveData] = useState();
-
+    const [Image, setImage] = useState(null)
     const server = useSelector((state)=> state.prod.link)
     const dispatch = useDispatch()
 
@@ -35,8 +35,21 @@ const Profile = () => {
     },[server, navigate])
 
     const handlerUpdate = async(id, changes) =>{
+        const formData = new FormData()
+        if(changes.login) formData.append('login', changes.login)
+        if(changes.given_name) formData.append('given_name', changes.given_name)
+        if(changes.family_name) formData.append('family_name', changes.family_name)
+        if(changes.additional_name) formData.append('additional_name', changes.additional_name)
+        if(changes.gender) formData.append('gender', changes.gender)
+        if(changes.city) formData.append('city', changes.city)
+        if(changes.street) formData.append('street', changes.street)
+        if(changes.entrance) formData.append('entrance', changes.entrance)
+        if(changes.house) formData.append('house', changes.house)
+        if(changes.apartment) formData.append('apartment',changes.apartment)
+        if(changes.image) formData.append('image', changes.image)
+
         const res = await axios.patch(`${server}/api/user/all/${id}/update`,
-            changes,
+            formData,
             {withCredentials:true}
         )
         
@@ -55,7 +68,11 @@ const Profile = () => {
 
     const change = (e) => {
         const {name, value, files} = e.target
-        setUserData({...UserData, [name]:files ? files[0] : value})
+        if(files){
+            setImage(files[0])
+            return
+        }
+        setUserData({...UserData, [name]:value})
     }
 
     const hasChange = JSON.stringify(UserData) !== JSON.stringify(SaveData)
@@ -93,6 +110,15 @@ const Profile = () => {
                                 type='text' name='additional_name'
                                 value={user?.additional_name ?? ''} onChange={change}
                                 autoComplete='additional-name'/>
+                    </div>
+                    <div className='profile-block__field'>
+                        <label  htmlFor='image'>Изображение</label>
+                        <input  id='image'
+                                type='file' name='image'
+                                accept='image/*'
+                                onChange={change}
+                                autoComplete='image'/>
+                        <img src={`${server}/${user?.image}`} alt={user?.name}/>
                     </div>
                     <div className='profile-block__field--checkbox'>
                         <p>Пол</p>
@@ -166,7 +192,8 @@ const Profile = () => {
                         street: user.street,
                         entrance: user.entrance,
                         house: user.house,
-                        apartment: user.apartment
+                        apartment: user.apartment,
+                        image: Image
                     })}>
                 Сохранить
             </button>

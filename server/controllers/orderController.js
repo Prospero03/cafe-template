@@ -27,11 +27,9 @@ class orderController{
         }
 
         return res.status(201).json({success:true, message:'Зака создан', data:order})
-
     }
 
     async index(req,res){
-        const {user} = req
         const orders = await Order.findAll({
             include: [User, Product],
             order: [['createdAt', 'DESC']]
@@ -48,7 +46,14 @@ class orderController{
     }
 
     async update(req,res){
+        const {id} = req.params
+        const {status} = req.body
+        const order = await Order.findByPk(id)
 
+        order.status = status
+        await order.save()
+
+        return res.status(200).json({success:true, message:'Вы изменили статус'})
     }
 }
 

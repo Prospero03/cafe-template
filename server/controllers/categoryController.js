@@ -1,7 +1,7 @@
 const path = require('path')
 const uuid =require('uuid')
 const { Category } = require('../models/models')
-const { json } = require('sequelize')
+
 
 class categoryController{
     async create(req,res){

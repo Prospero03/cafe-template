@@ -8,7 +8,6 @@ const DashboardProductDetail = () => {
   const {id} = useParams()
   const [Product, setProduct] = useState();
   const [Image, setImage] = useState(null);
-  // const [ShowProduct, setShowProduct] = useState();
   const server = useSelector((state)=>state.prod.link)
   const navigate = useNavigate()
 
@@ -20,7 +19,6 @@ const DashboardProductDetail = () => {
         )
         console.log(res.data.data)
         setProduct(res.data.data)
-        // setShowProduct(res.data.data)
       } catch (error) {
         console.log(error.response.data.error)
       }

@@ -2,6 +2,8 @@ const {Op} = require('sequelize')
 const {User} = require('../models/models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const uuid = require('uuid')
+const path = require('path')
 
 class userController{
     async register(req,res){
@@ -105,6 +107,7 @@ class userController{
                 apartment: user.apartment, 
                 email: user.email,
                 login: user.login,
+                image: user.image,
             }
         })
     }
@@ -135,6 +138,7 @@ class userController{
             apartment,
             login,
         } = req.body
+        const {image} = req.files || {}
 
         const user = await User.findByPk(id)
         
@@ -148,6 +152,11 @@ class userController{
         user.entrance = entrance
         user.house = house
         user.apartment = apartment
+        if(image){
+            let fileImage = uuid.v4() + path.extname(image.name)
+            await image.mv(path.resolve(__dirname, '..', 'static', fileImage))
+            user.image = fileImage
+        }
 
         await user.save()
         return res.status(200).json({success:true, message:'вы обновили данные'})
